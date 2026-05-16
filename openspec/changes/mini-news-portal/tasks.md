@@ -32,13 +32,13 @@
 
 ## 4. Service Layer (server/services)
 
-- [ ] 4.1 `CategoryService` — list with newsCount, get by id/slug, create, update, delete-with-news-check (throws `CategoryHasNewsError`)
-- [ ] 4.2 `NewsService.listPublished({ page, limit, categoryId|categorySlug })` returning `{ items, page, limit, total, hasMore }`
-- [ ] 4.3 `NewsService.getDetailBySlug(slug)` — single DB transaction: load PUBLISHED article, atomically `view_count += 1`, upsert `news_view_daily(news_id, today)`, return article + `newerSlug` + `olderSlug`
-- [ ] 4.4 `NewsService.mostViewedToday(limit)` query
-- [ ] 4.5 `NewsService.create/update/delete` with category existence + slug conflict mapping
-- [ ] 4.6 `AuthService.login(username, password)` — constant-time compare against runtime config; signs JWT with `jose` (HS256, 1h)
-- [ ] 4.7 Vitest unit tests for view counter, sibling resolution edges (newest/oldest), validation, conflicts
+- [x] 4.1 `CategoryService` — list with newsCount, get by id/slug, create, update, delete-with-news-check (throws `CategoryHasNewsError`)
+- [x] 4.2 `NewsService.listPublished({ page, limit, categoryId|categorySlug })` returning `{ items, page, limit, total, hasMore }`
+- [x] 4.3 `NewsService.getDetailBySlug(slug)` — single DB transaction: load PUBLISHED article, atomically `view_count += 1`, upsert `news_view_daily(news_id, today)`, return article + `newerSlug` + `olderSlug`
+- [x] 4.4 `NewsService.mostViewedToday(limit)` query
+- [x] 4.5 `NewsService.create/update/delete` with category existence + slug conflict mapping
+- [x] 4.6 `AuthService.login(username, password)` — constant-time compare against runtime config; signs JWT with `jose` (HS256, 1h)
+- [x] 4.7 Vitest unit tests for view counter, sibling resolution edges (newest/oldest), validation, conflicts
 
 ## 5. Transport Layer (Nitro `server/api`)
 
