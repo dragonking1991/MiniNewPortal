@@ -24,7 +24,7 @@ Deliver a production-style training system with:
   - `tasks.md` (checklist)
 
 ### Exit Criteria
-- Everyone agrees stack is Nuxt 3 + Vue + Pinia + Drizzle + Zod + TypeScript.
+- Everyone agrees stack is Nuxt 3 + Vue + Pinia + Drizzle + Zod + TypeScript with Tailwind-only UI (no Bootstrap frameworks).
 - All required behaviors are traceable to specs.
 
 ## 2) Initialize Workspace & Tooling
@@ -52,7 +52,7 @@ Deliver a production-style training system with:
 - `pnpm install` succeeds.
 - `pnpm typecheck && pnpm lint` pass on empty scaffold.
 
-## 3) Bootstrap Nuxt 3 App
+## 3) Setup Nuxt 3 App
 
 ### Step 3.1
 - Scaffold Nuxt app in `apps/web`.
@@ -63,6 +63,7 @@ Deliver a production-style training system with:
   - `@pinia/nuxt`
   - `@nuxtjs/tailwindcss`
   - `@nuxt/test-utils`
+  - Keep UI stack Tailwind-only (do not install `bootstrap`, `bootstrap-vue`, or Nuxt UI kits)
 
 ### Step 3.3
 - Configure `nuxt.config.ts`:

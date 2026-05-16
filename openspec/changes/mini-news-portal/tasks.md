@@ -1,30 +1,31 @@
 ## 1. Monorepo & Tooling Setup
 
-- [ ] 1.1 Initialize pnpm workspace with `apps/web` (Nuxt 3), `packages/shared` (Zod schemas + types), `e2e/`
-- [ ] 1.2 Add root tooling: TypeScript 5 with `strict: true` (shared `tsconfig.base.json`), ESLint + `@typescript-eslint` + `eslint-plugin-vue`, Prettier, Husky pre-commit, `tsc --noEmit` script
-- [ ] 1.3 Add root scripts: `dev`, `build`, `lint`, `typecheck` (runs `tsc --noEmit` in every package), `test`, `test:e2e`, `db:generate`, `db:migrate`, `db:seed`
-- [ ] 1.4 Create `.env.example` with `DATABASE_URL`, `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `NUXT_PUBLIC_SITE_NAME`
-- [ ] 1.5 Add lint rule (`eslint-plugin-boundaries` or custom) forbidding `server/api/**` → `server/repositories/**` direct imports
-- [ ] 1.6 Add GitHub Actions workflow running lint, Vitest, build, and Playwright
+- [x] 1.1 Initialize pnpm workspace with `apps/web` (Nuxt 3), `packages/shared` (Zod schemas + types), `e2e/`
+- [x] 1.2 Add root tooling: TypeScript 5 with `strict: true` (shared `tsconfig.base.json`), ESLint + `@typescript-eslint` + `eslint-plugin-vue`, Prettier, Husky pre-commit, `tsc --noEmit` script
+- [x] 1.3 Add root scripts: `dev`, `build`, `lint`, `typecheck` (runs `tsc --noEmit` in every package), `test`, `test:e2e`, `db:generate`, `db:migrate`, `db:seed`
+- [x] 1.4 Create `.env.example` with `DATABASE_URL`, `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `NUXT_PUBLIC_SITE_NAME`
+- [x] 1.5 Add lint rule (`eslint-plugin-boundaries` or custom) forbidding `server/api/**` → `server/repositories/**` direct imports
+- [x] 1.6 Add GitHub Actions workflow running lint, Vitest, build, and Playwright
 
-## 2. Nuxt App Bootstrap
+## 2. Nuxt App Setup
 
-- [ ] 2.1 Scaffold Nuxt 3 app in `apps/web` (`nuxi init`)
-- [ ] 2.2 Install modules: `@pinia/nuxt`, `@nuxtjs/tailwindcss`, `@nuxt/test-utils`
-- [ ] 2.3 Configure `nuxt.config.ts`: `ssr: true`, `routeRules` so `/admin/**` is `ssr: false` (SPA mode), runtime config for `jwtSecret`, `adminUsername`, `adminPassword`, public `apiBase`
-- [ ] 2.4 Set up Tailwind config and base layout (`app.vue`, `layouts/default.vue`, `layouts/admin.vue`)
+- [x] 2.1 Scaffold Nuxt 3 app in `apps/web` (`nuxi init`)
+- [x] 2.2 Install modules: `@pinia/nuxt`, `@nuxtjs/tailwindcss`, `@nuxt/test-utils`
+- [x] 2.3 Configure `nuxt.config.ts`: `ssr: true`, `routeRules` so `/admin/**` is `ssr: false` (SPA mode), runtime config for `jwtSecret`, `adminUsername`, `adminPassword`, public `apiBase`
+- [x] 2.4 Set up Tailwind config and base layout (`app.vue`, `layouts/default.vue`, `layouts/admin.vue`)
+- [x] 2.5 Enforce UI styling policy: Tailwind only; do not add Bootstrap CSS/BootstrapVue/Nuxt UI
 
 ## 3. Persistence Layer (server/db + repositories)
 
-- [ ] 3.1 Install `drizzle-orm`, `drizzle-kit`, `pg` (and `better-sqlite3` for tests)
-- [ ] 3.2 Define `server/db/schema.ts`:
+- [x] 3.1 Install `drizzle-orm`, `drizzle-kit`, `pg` (and `better-sqlite3` for tests)
+- [x] 3.2 Define `server/db/schema.ts`:
   - `categories` (id PK, name NOT NULL, slug UNIQUE NOT NULL, timestamps)
   - `news` (id PK, title/slug/summary/content NOT NULL, image_url NULL, status CHECK in DRAFT|PUBLISHED, published_at NULL, view_count default 0, category_id FK NOT NULL ON DELETE RESTRICT, timestamps; indexes on `(category_id, published_at DESC)` and `(published_at DESC)`)
   - `news_view_daily` (id, news_id FK ON DELETE CASCADE, view_date DATE, view_count default 0, UNIQUE(news_id, view_date), index on `(view_date, view_count DESC)`)
-- [ ] 3.3 Configure `drizzle.config.ts` and `server/db/client.ts` (dialect switch postgres ↔ sqlite via `DATABASE_URL`)
+- [x] 3.3 Configure `drizzle.config.ts` and `server/db/client.ts` (dialect switch postgres ↔ sqlite via `DATABASE_URL`)
 - [ ] 3.4 Generate & run initial migration (`drizzle-kit generate` + migrator script)
-- [ ] 3.5 Implement `server/db/seed.ts` creating 4 categories and 30+ published news + a few drafts
-- [ ] 3.6 Implement repositories (no business logic):
+- [x] 3.5 Implement `server/db/seed.ts` creating 4 categories and 30+ published news + a few drafts
+- [x] 3.6 Implement repositories (no business logic):
   - `category.repo.ts` (find all with news counts, find by id/slug, insert, update, delete)
   - `news.repo.ts` (paginated list filters, find by slug, find newer/older siblings, insert, update, delete, atomic `incrementViewCount`)
   - `view.repo.ts` (upsert-and-increment today, top N for date)

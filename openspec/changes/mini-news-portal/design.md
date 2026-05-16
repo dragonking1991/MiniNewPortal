@@ -26,7 +26,7 @@ Greenfield project for a Mini News Portal used as a training reference. Three co
 **Recommended (chosen for this spec):**
 - **Language**: **TypeScript 5.x** in `strict` mode everywhere — `apps/web` (Vue SFCs use `<script setup lang="ts">`), `packages/shared`, `e2e/playwright`. No plain JS files.
 - **Full-stack framework**: **Nuxt 3** (Vue 3 + TypeScript) — provides Vue SFC pages for the UI **and** a built-in Nitro server (`server/api/**`) that hosts the REST API. One app, one deploy, but layered cleanly inside.
-- **UI**: **Vue 3** Composition API (`<script setup lang="ts">`) + **Tailwind CSS** (`@nuxtjs/tailwindcss`). Public routes (`/`, `/category/[slug]`, `/news/[slug]`) use SSR for SEO; admin routes (`/admin/*`) are SPA-mode (client-only) under a route middleware.
+- **UI**: **Vue 3** Composition API (`<script setup lang="ts">`) + **Tailwind CSS** (`@nuxtjs/tailwindcss`) only. Do not use Bootstrap CSS/BootstrapVue/Nuxt UI kits for this project. Public routes (`/`, `/category/[slug]`, `/news/[slug]`) use SSR for SEO; admin routes (`/admin/*`) are SPA-mode (client-only) under a route middleware.
 - **State management**: **Pinia** (`@pinia/nuxt`) — one store per concern: `useAuthStore`, `useCategoriesStore`, `useNewsStore`, `useAdminNewsStore`. Stores are typed (no `any`). Server state is fetched via Nuxt's `useFetch` / `$fetch`; Pinia owns client-side UI state (current admin filters, optimistic updates, auth flag, infinite-scroll page cursor).
 - **Validation & shared types**: **Zod** is the single source of truth for every API contract. Schemas live in `packages/shared` and TS types are derived with `z.infer<typeof Schema>`, so client (forms, stores) and server (Nitro handlers) share **the exact same shapes**:
   - Server: `validate(event, { body, query, params })` helper parses inputs and throws on failure.
@@ -250,6 +250,7 @@ Implemented via **Zod schemas** in `packages/shared`, applied inside each Nitro 
 - API handlers call services only; never call Drizzle directly from handlers.
 - Use SSR for public routes and SPA mode only for `/admin/**`.
 - Keep secrets in server runtime config only; never expose through public runtime config.
+- Do not install or use Bootstrap CSS frameworks (`bootstrap`, `bootstrap-vue`, `@nuxt/ui`).
 
 ### Vue 3
 
@@ -332,7 +333,7 @@ Implemented via **Zod schemas** in `packages/shared`, applied inside each Nitro 
 
 ## Migration Plan
 
-Greenfield — no migration. Bootstrap sequence:
+Greenfield — no migration. Setup sequence:
 1. `pnpm drizzle-kit generate` then `pnpm db:migrate` to create schema.
 2. `pnpm db:seed` inserts 4 demo categories + ~30 news items + view counters.
 3. `pnpm dev` runs the Nuxt app (UI + Nitro API) on `:3000`.

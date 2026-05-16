@@ -1,0 +1,440 @@
+{
+  "changeName": "mini-news-portal",
+  "changeDir": "/Users/trungthanh.nguyen/Library/CloudStorage/OneDrive-Ogilvy/De
+sktop/Reseach/MiniNewsPortalSystem/openspec/changes/mini-news-portal",
+  "schemaName": "spec-driven",
+  "contextFiles": {
+    "proposal": "/Users/trungthanh.nguyen/Library/CloudStorage/OneDrive-Ogilvy/D
+esktop/Reseach/MiniNewsPortalSystem/openspec/changes/mini-news-portal/proposal.m
+d",
+    "specs": "/Users/trungthanh.nguyen/Library/CloudStorage/OneDrive-Ogilvy/Desk
+top/Reseach/MiniNewsPortalSystem/openspec/changes/mini-news-portal/specs/**/*.md
+",
+    "design": "/Users/trungthanh.nguyen/Library/CloudStorage/OneDrive-Ogilvy/Des
+ktop/Reseach/MiniNewsPortalSystem/openspec/changes/mini-news-portal/design.md",
+    "tasks": "/Users/trungthanh.nguyen/Library/CloudStorage/OneDrive-Ogilvy/Desk
+top/Reseach/MiniNewsPortalSystem/openspec/changes/mini-news-portal/tasks.md"
+  },
+  "progress": {
+    "total": 69,
+    "complete": 0,
+    "remaining": 69
+  },
+  "tasks": [
+    {
+      "id": "1",
+      "description": "1.1 Initialize pnpm workspace with `apps/web` (Nuxt 3), `p
+ackages/shared` (Zod schemas + types), `e2e/`",
+      "done": false
+    },
+    {
+      "id": "2",
+      "description": "1.2 Add root tooling: TypeScript 5 with `strict: true` (sh
+ared `tsconfig.base.json`), ESLint + `@typescript-eslint` + `eslint-plugin-vue`,
+ Prettier, Husky pre-commit, `tsc --noEmit` script",
+      "done": false
+    },
+    {
+      "id": "3",
+      "description": "1.3 Add root scripts: `dev`, `build`, `lint`, `typecheck` 
+(runs `tsc --noEmit` in every package), `test`, `test:e2e`, `db:generate`, `db:m
+igrate`, `db:seed`",
+      "done": false
+    },
+    {
+      "id": "4",
+      "description": "1.4 Create `.env.example` with `DATABASE_URL`, `JWT_SECRET
+`, `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `NUXT_PUBLIC_SITE_NAME`",
+      "done": false
+    },
+    {
+      "id": "5",
+      "description": "1.5 Add lint rule (`eslint-plugin-boundaries` or custom) f
+orbidding `server/api/**` → `server/repositories/**` direct imports",
+      "done": false
+    },
+    {
+      "id": "6",
+      "description": "1.6 Add GitHub Actions workflow running lint, Vitest, buil
+d, and Playwright",
+      "done": false
+    },
+    {
+      "id": "7",
+      "description": "2.1 Scaffold Nuxt 3 app in `apps/web` (`nuxi init`)",
+      "done": false
+    },
+    {
+      "id": "8",
+      "description": "2.2 Install modules: `@pinia/nuxt`, `@nuxtjs/tailwindcss`,
+ `@nuxt/test-utils`",
+      "done": false
+    },
+    {
+      "id": "9",
+      "description": "2.3 Configure `nuxt.config.ts`: `ssr: true`, `routeRules` 
+so `/admin/**` is `ssr: false` (SPA mode), runtime config for `jwtSecret`, `admi
+nUsername`, `adminPassword`, public `apiBase`",
+      "done": false
+    },
+    {
+      "id": "10",
+      "description": "2.4 Set up Tailwind config and base layout (`app.vue`, `la
+youts/default.vue`, `layouts/admin.vue`)",
+      "done": false
+    },
+    {
+      "id": "11",
+      "description": "3.1 Install `drizzle-orm`, `drizzle-kit`, `pg` (and `bette
+r-sqlite3` for tests)",
+      "done": false
+    },
+    {
+      "id": "12",
+      "description": "3.2 Define `server/db/schema.ts`:",
+      "done": false
+    },
+    {
+      "id": "13",
+      "description": "3.3 Configure `drizzle.config.ts` and `server/db/client.ts
+` (dialect switch postgres ↔ sqlite via `DATABASE_URL`)",
+      "done": false
+    },
+    {
+      "id": "14",
+      "description": "3.4 Generate & run initial migration (`drizzle-kit generat
+e` + migrator script)",
+      "done": false
+    },
+    {
+      "id": "15",
+      "description": "3.5 Implement `server/db/seed.ts` creating 4 categories an
+d 30+ published news + a few drafts",
+      "done": false
+    },
+    {
+      "id": "16",
+      "description": "3.6 Implement repositories (no business logic):",
+      "done": false
+    },
+    {
+      "id": "17",
+      "description": "4.1 `CategoryService` — list with newsCount, get by id/slu
+g, create, update, delete-with-news-check (throws `CategoryHasNewsError`)",
+      "done": false
+    },
+    {
+      "id": "18",
+      "description": "4.2 `NewsService.listPublished({ page, limit, categoryId|c
+ategorySlug })` returning `{ items, page, limit, total, hasMore }`",
+      "done": false
+    },
+    {
+      "id": "19",
+      "description": "4.3 `NewsService.getDetailBySlug(slug)` — single DB transa
+ction: load PUBLISHED article, atomically `view_count += 1`, upsert `news_view_d
+aily(news_id, today)`, return article + `newerSlug` + `olderSlug`",
+      "done": false
+    },
+    {
+      "id": "20",
+      "description": "4.4 `NewsService.mostViewedToday(limit)` query",
+      "done": false
+    },
+    {
+      "id": "21",
+      "description": "4.5 `NewsService.create/update/delete` with category exist
+ence + slug conflict mapping",
+      "done": false
+    },
+    {
+      "id": "22",
+      "description": "4.6 `AuthService.login(username, password)` — constant-tim
+e compare against runtime config; signs JWT with `jose` (HS256, 1h)",
+      "done": false
+    },
+    {
+      "id": "23",
+      "description": "4.7 Vitest unit tests for view counter, sibling resolution
+ edges (newest/oldest), validation, conflicts",
+      "done": false
+    },
+    {
+      "id": "24",
+      "description": "5.1 Define Zod schemas in `packages/shared` (Category, New
+s, pagination query, login body, JWT payload) and export inferred TS types via `
+z.infer<typeof Schema>` so client and server share the exact same shapes",
+      "done": false
+    },
+    {
+      "id": "25",
+      "description": "5.2 Implement `server/utils/validate.ts` (`validate(event,
+ { body?, query?, params? })`)",
+      "done": false
+    },
+    {
+      "id": "26",
+      "description": "5.3 Implement `server/middleware/01.error.ts` shaping `{ e
+rror: { code, message, details? } }` for `AppError` and `ZodError`",
+      "done": false
+    },
+    {
+      "id": "27",
+      "description": "5.4 Implement `server/utils/auth.ts` with `requireAdmin(ev
+ent)` (reads `Authorization` header OR `mnp_token` cookie, verifies via `jose`)"
+,
+      "done": false
+    },
+    {
+      "id": "28",
+      "description": "5.5 Public endpoints:",
+      "done": false
+    },
+    {
+      "id": "29",
+      "description": "5.6 Auth endpoints:",
+      "done": false
+    },
+    {
+      "id": "30",
+      "description": "5.7 Admin endpoints under `server/api/admin/categories/**`
+ and `server/api/admin/news/**` — list (paginated), get, create (POST), update (
+PUT), delete — all call `requireAdmin(event)` first",
+      "done": false
+    },
+    {
+      "id": "31",
+      "description": "5.8 Generate OpenAPI doc (e.g. `nitro-openapi` or hand-wri
+tten `server/api/_openapi.get.ts`) served at `/api/_docs`",
+      "done": false
+    },
+    {
+      "id": "32",
+      "description": "6.1 `stores/auth.ts` — `isAuthenticated`, `username`, `log
+in()`, `logout()`; hydrates from `/api/auth/me` on app init",
+      "done": false
+    },
+    {
+      "id": "33",
+      "description": "6.2 `stores/categories.ts` — caches public category list",
+      "done": false
+    },
+    {
+      "id": "34",
+      "description": "6.3 `stores/news.ts` — public news cache + infinite-scroll
+ state per category (`pagesByCategory`, `hasMoreByCategory`)",
+      "done": false
+    },
+    {
+      "id": "35",
+      "description": "6.4 `stores/adminNews.ts` — admin list filters (category, 
+status, page), optimistic update helpers",
+      "done": false
+    },
+    {
+      "id": "36",
+      "description": "6.5 `composables/useApi.ts` — typed `$fetch` wrapper that 
+maps API error envelope to thrown `ApiError`",
+      "done": false
+    },
+    {
+      "id": "37",
+      "description": "6.6 `composables/useInfiniteScroll.ts` — `IntersectionObse
+rver`-based helper used by category page",
+      "done": false
+    },
+    {
+      "id": "38",
+      "description": "7.1 `pages/index.vue` — fetch via `useFetch` on server: ca
+tegories with latest 5 news each + `MostViewedToday` widget",
+      "done": false
+    },
+    {
+      "id": "39",
+      "description": "7.2 `pages/category/[slug].vue` — initial SSR fetches page
+ 1; client uses `useInfiniteScroll` + `news` store to load and append more",
+      "done": false
+    },
+    {
+      "id": "40",
+      "description": "7.3 `pages/news/[slug].vue` — render article + `<NewerOlde
+rNav>` component; show view count",
+      "done": false
+    },
+    {
+      "id": "41",
+      "description": "7.4 Public components: `CategorySection.vue`, `NewsCard.vu
+e`, `MostViewedToday.vue`, `NewerOlderNav.vue`, `AppHeader.vue`, `AppFooter.vue`
+",
+      "done": false
+    },
+    {
+      "id": "42",
+      "description": "7.5 Custom `error.vue` for 404",
+      "done": false
+    },
+    {
+      "id": "43",
+      "description": "8.1 `middleware/admin-auth.ts` route middleware: redirects
+ to `/admin/login` if `useAuthStore.isAuthenticated` is false (server-side check
+s cookie via SSR call to `/api/auth/me`)",
+      "done": false
+    },
+    {
+      "id": "44",
+      "description": "8.2 `layouts/admin.vue` — sidebar nav, top bar with Logout
+ button calling `authStore.logout()`",
+      "done": false
+    },
+    {
+      "id": "45",
+      "description": "8.3 `pages/admin/login.vue` — form bound to Zod schema; on
+ success redirects to `/admin`",
+      "done": false
+    },
+    {
+      "id": "46",
+      "description": "8.4 `pages/admin/index.vue` — dashboard with quick counts"
+,
+      "done": false
+    },
+    {
+      "id": "47",
+      "description": "8.5 `pages/admin/categories/index.vue` — list + create/edi
+t/delete dialogs",
+      "done": false
+    },
+    {
+      "id": "48",
+      "description": "8.6 `pages/admin/news/index.vue` — paginated list with cat
+egory/status filters (driven by `adminNews` store)",
+      "done": false
+    },
+    {
+      "id": "49",
+      "description": "8.7 `pages/admin/news/new.vue` and `pages/admin/news/[id]/
+edit.vue` — form bound to the shared Zod schemas (via `@vee-validate/zod` or a t
+hin wrapper) for client-side validation; maps API 400 `details` to per-field err
+ors",
+      "done": false
+    },
+    {
+      "id": "50",
+      "description": "8.8 Surface API 401/404/409 errors as toasts via a shared 
+`useToast()` composable",
+      "done": false
+    },
+    {
+      "id": "51",
+      "description": "9.1 Fail-fast at Nuxt boot if `JWT_SECRET` / `ADMIN_USERNA
+ME` / `ADMIN_PASSWORD` missing (runtime check in a server plugin)",
+      "done": false
+    },
+    {
+      "id": "52",
+      "description": "9.2 Constant-time credential comparison in `AuthService`",
+      "done": false
+    },
+    {
+      "id": "53",
+      "description": "9.3 `setCookie` flags: `httpOnly: true`, `secure: !dev`, `
+sameSite: 'lax'`, `maxAge: 3600`, `path: '/'`",
+      "done": false
+    },
+    {
+      "id": "54",
+      "description": "9.4 Render news `content` safely (Vue interpolation escape
+s by default; if using `v-html` for rich content, sanitize with `DOMPurify`)",
+      "done": false
+    },
+    {
+      "id": "55",
+      "description": "9.5 Document threat model & known limitations in README",
+      "done": false
+    },
+    {
+      "id": "56",
+      "description": "10.1 Scaffold `e2e/playwright` with `playwright.config.ts`
+; `webServer` builds & starts Nuxt (`pnpm build && node .output/server/index.mjs
+`) against a test DB",
+      "done": false
+    },
+    {
+      "id": "57",
+      "description": "10.2 `globalSetup` resets test DB (drizzle migrator + seed
+) with deterministic data and a known admin credential set",
+      "done": false
+    },
+    {
+      "id": "58",
+      "description": "10.3 Public tests:",
+      "done": false
+    },
+    {
+      "id": "59",
+      "description": "10.4 Admin tests:",
+      "done": false
+    },
+    {
+      "id": "60",
+      "description": "10.5 Worker-scoped unique slugs/titles for parallel safety
+",
+      "done": false
+    },
+    {
+      "id": "61",
+      "description": "10.6 Wire `pnpm test:e2e` into CI; upload Playwright HTML 
+report on failure",
+      "done": false
+    },
+    {
+      "id": "62",
+      "description": "11.1 README: tech stack (Nuxt 3 + Vue + Pinia + Drizzle), 
+run/dev/test instructions, env vars, project layout",
+      "done": false
+    },
+    {
+      "id": "63",
+      "description": "11.2 Export ERD diagram (mermaid) from design.md",
+      "done": false
+    },
+    {
+      "id": "64",
+      "description": "11.3 Publish OpenAPI doc link and example curl requests fo
+r each endpoint",
+      "done": false
+    },
+    {
+      "id": "65",
+      "description": "11.4 Add \"swap a layer\" guide listing the alternative op
+tions from design.md (D1)",
+      "done": false
+    },
+    {
+      "id": "66",
+      "description": "12.1 Run `openspec validate mini-news-portal`",
+      "done": false
+    },
+    {
+      "id": "67",
+      "description": "12.2 Run full test suite (`pnpm typecheck && pnpm lint && 
+pnpm test && pnpm test:e2e`) and ensure green",
+      "done": false
+    },
+    {
+      "id": "68",
+      "description": "12.3 Manual smoke test of every spec scenario",
+      "done": false
+    },
+    {
+      "id": "69",
+      "description": "12.4 Archive the change via `openspec archive mini-news-po
+rtal`",
+      "done": false
+    }
+  ],
+  "state": "ready",
+  "instruction": "Read context files, work through pending tasks, mark complete 
+as you go.\nPause if you hit blockers or need clarification."
+}
+trungthanh.nguyen@OG-M-M0YWQMQF9Y MiniNewsPortalSystem % 
