@@ -42,10 +42,10 @@
 
 ## 5. Transport Layer (Nitro `server/api`)
 
-- [ ] 5.1 Define Zod schemas in `packages/shared` (Category, News, pagination query, login body, JWT payload) and export inferred TS types via `z.infer<typeof Schema>` so client and server share the exact same shapes
-- [ ] 5.2 Implement `server/utils/validate.ts` (`validate(event, { body?, query?, params? })`)
-- [ ] 5.3 Implement `server/middleware/01.error.ts` shaping `{ error: { code, message, details? } }` for `AppError` and `ZodError`
-- [ ] 5.4 Implement `server/utils/auth.ts` with `requireAdmin(event)` (reads `Authorization` header OR `mnp_token` cookie, verifies via `jose`)
+- [x] 5.1 Define Zod schemas in `packages/shared` (Category, News, pagination query, login body, JWT payload) and export inferred TS types via `z.infer<typeof Schema>` so client and server share the exact same shapes
+- [x] 5.2 Implement `server/utils/validate.ts` (`validate(event, { body?, query?, params? })`)
+- [x] 5.3 Implement `server/middleware/01.error.ts` shaping `{ error: { code, message, details? } }` for `AppError` and `ZodError`
+- [x] 5.4 Implement `server/utils/auth.ts` with `requireAdmin(event)` (reads `Authorization` header OR `mnp_token` cookie, verifies via `jose`)
 - [ ] 5.5 Public endpoints:
   - `server/api/categories/index.get.ts`
   - `server/api/news/index.get.ts` (pagination + filter)

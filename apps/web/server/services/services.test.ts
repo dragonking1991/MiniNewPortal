@@ -156,21 +156,28 @@ describe("Services", () => {
         slug: "test",
         summary: "Summary",
         content: "Content",
+        imageUrl: null,
         viewCount: 5,
         publishedAt: new Date(),
         status: "PUBLISHED" as const,
         categoryId: 1,
+        categorySlug: "tech",
         createdAt: new Date(),
         updatedAt: new Date()
       };
 
-      const mockNewer = { id: 2, slug: "newer-article" };
-      const mockOlder = { id: 0, slug: "older-article" };
+      const mockNewer = { id: 2, slug: "newer-article", publishedAt: new Date() };
+      const mockOlder = { id: 0, slug: "older-article", publishedAt: new Date() };
 
       vi.mocked(newsRepoMock.findBySlug).mockResolvedValueOnce(mockArticle);
       vi.mocked(newsRepoMock.findNewerSibling).mockResolvedValueOnce(mockNewer);
       vi.mocked(newsRepoMock.findOlderSibling).mockResolvedValueOnce(mockOlder);
-      vi.mocked(viewRepo.upsertAndIncrementToday).mockResolvedValueOnce({});
+      vi.mocked(viewRepo.upsertAndIncrementToday).mockResolvedValueOnce({
+        id: 1,
+        newsId: 1,
+        viewDate: "2026-05-16",
+        viewCount: 1
+      });
 
       const result = await newsService.getDetailBySlug("test");
 
@@ -189,10 +196,12 @@ describe("Services", () => {
         slug: "test",
         summary: "Summary",
         content: "Content",
+        imageUrl: null,
         viewCount: 0,
         publishedAt: new Date(),
         status: "PUBLISHED" as const,
         categoryId: 1,
+        categorySlug: "tech",
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -200,7 +209,12 @@ describe("Services", () => {
       vi.mocked(newsRepoMock.findBySlug).mockResolvedValueOnce(mockArticle);
       vi.mocked(newsRepoMock.findNewerSibling).mockResolvedValueOnce(null);
       vi.mocked(newsRepoMock.findOlderSibling).mockResolvedValueOnce(null);
-      vi.mocked(viewRepo.upsertAndIncrementToday).mockResolvedValueOnce({});
+      vi.mocked(viewRepo.upsertAndIncrementToday).mockResolvedValueOnce({
+        id: 1,
+        newsId: 1,
+        viewDate: "2026-05-16",
+        viewCount: 1
+      });
 
       const result = await newsService.getDetailBySlug("test");
 
