@@ -6,6 +6,12 @@
           Admin Panel
         </NuxtLink>
         <p class="mt-2 text-sm text-slate-400">Content operations</p>
+        <nav class="mt-8 space-y-2">
+          <NuxtLink to="/admin" class="block px-3 py-2 rounded hover:bg-slate-800">Dashboard</NuxtLink>
+          <NuxtLink to="/admin/categories" class="block px-3 py-2 rounded hover:bg-slate-800">Categories</NuxtLink>
+          <NuxtLink to="/admin/news" class="block px-3 py-2 rounded hover:bg-slate-800">News</NuxtLink>
+        </nav>
+        <button @click="logout" class="mt-8 w-full bg-red-600 text-white rounded px-3 py-2">Logout</button>
       </aside>
 
       <main class="p-6 lg:p-10">
@@ -14,3 +20,13 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+const router = useRouter();
+const authStore = useAuthStore();
+
+async function logout() {
+  await authStore.logout();
+  router.push("/");
+}
+</script>

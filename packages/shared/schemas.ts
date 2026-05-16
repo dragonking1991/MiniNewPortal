@@ -61,7 +61,10 @@ export const newsDetailSchema = newsSchema.extend({
 // ==================== PAGINATION ====================
 export const paginationQuerySchema = z.object({
   page: z.number().int().positive().default(1),
-  limit: z.number().int().positive().max(100).default(20)
+  limit: z.number().int().positive().max(100).default(20),
+  categoryId: z.number().optional(),
+  categorySlug: z.string().optional(),
+  status: z.enum(["DRAFT", "PUBLISHED"]).optional()
 });
 
 export const paginationResponseSchema = z.object({

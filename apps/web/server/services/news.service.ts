@@ -7,7 +7,7 @@ import { categoryService } from "./category.service";
 import { NotFoundError, ConflictError, ValidationError } from "./errors";
 
 export const newsService = {
-  async listPublished(filters: Omit<NewsListFilters, "status">) {
+  async listPublished(filters: { page: number; limit: number; categoryId?: number; categorySlug?: string }) {
     return newsRepo.list({
       ...filters,
       status: "PUBLISHED"
@@ -45,6 +45,14 @@ export const newsService = {
       newerSlug: newer?.slug ?? null,
       olderSlug: older?.slug ?? null
     };
+  },
+
+  async getById(id: number) {
+    const article = await newsRepo.findById(id);
+    if (!article) {
+      throw new NotFoundError("Article", String(id));
+    }
+    return article;
   },
 
   async mostViewedToday(limit: number = 5) {

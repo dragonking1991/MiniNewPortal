@@ -1,15 +1,16 @@
 <template>
-  <div class="space-y-4">
-    <p class="text-sm uppercase tracking-[0.2em] text-cyan-300">Admin</p>
-    <h1 class="text-3xl font-semibold tracking-tight text-white">Dashboard</h1>
-    <p class="max-w-2xl text-sm leading-7 text-slate-300">
-      Admin shell placeholder. Authentication, CRUD screens, and dashboards will be added in later tasks.
-    </p>
+  <div class="grid grid-cols-1 gap-4">
+    <AdminDashboard />
+    <div class="flex gap-2">
+      <NuxtLink to="/admin/categories" class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700">Manage Categories</NuxtLink>
+      <NuxtLink to="/admin/news" class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700">Manage News</NuxtLink>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-definePageMeta({
+definePageMeta({ 
+  middleware: "admin-auth",
   layout: "admin"
 });
 </script>

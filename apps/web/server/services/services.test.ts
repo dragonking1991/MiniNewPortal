@@ -53,7 +53,7 @@ describe("Services", () => {
   describe("CategoryService", () => {
     it("should throw NotFoundError when category not found by id", async () => {
       const { categoryRepo } = await import("../repositories/category.repo");
-      vi.mocked(categoryRepo.findById).mockResolvedValueOnce(null);
+      vi.mocked(categoryRepo.findById).mockResolvedValueOnce(null as any);
 
       await expect(categoryService.getById(999)).rejects.toThrow(NotFoundError);
     });
@@ -73,7 +73,7 @@ describe("Services", () => {
     it("should throw ConflictError when creating duplicate slug", async () => {
       const { categoryRepo } = await import("../repositories/category.repo");
 
-      const mockCategory = { id: 1, name: "Existing", slug: "existing" };
+      const mockCategory = { id: 1, name: "Existing", slug: "existing", createdAt: new Date(), updatedAt: new Date() };
       vi.mocked(categoryRepo.findBySlug).mockResolvedValueOnce(mockCategory);
 
       await expect(categoryService.create({ name: "New", slug: "existing" })).rejects.toThrow(ConflictError);
@@ -83,7 +83,7 @@ describe("Services", () => {
   describe("NewsService", () => {
     it("should throw NotFoundError when article not found", async () => {
       const { newsRepo } = await import("../repositories/news.repo");
-      vi.mocked(newsRepo.findBySlug).mockResolvedValueOnce(null);
+      vi.mocked(newsRepo.findBySlug).mockResolvedValueOnce(null as any);
 
       await expect(newsService.getDetailBySlug("nonexistent")).rejects.toThrow(NotFoundError);
     });
@@ -100,7 +100,7 @@ describe("Services", () => {
         updatedAt: new Date()
       });
 
-      vi.mocked(newsRepoMock.findBySlug).mockResolvedValueOnce(null);
+      vi.mocked(newsRepoMock.findBySlug).mockResolvedValueOnce(null as any);
 
       await expect(
         newsService.create({
@@ -130,8 +130,17 @@ describe("Services", () => {
       const existingNews = {
         id: 1,
         title: "Existing",
-        slug: "test-slug"
-      };
+        slug: "test-slug",
+        summary: "Summary",
+        content: "Content",
+        categoryId: 1,
+        status: "DRAFT",
+        viewCount: 0,
+        imageUrl: null,
+        publishedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      } as any;
       vi.mocked(newsRepoMock.findBySlug).mockResolvedValueOnce(existingNews);
 
       await expect(
