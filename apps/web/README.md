@@ -96,9 +96,9 @@ pnpm dev
 ```
 
 Visit:
-- Public site: http://localhost:3000
-- Admin panel: http://localhost:3000/admin
-- API OpenAPI: http://localhost:3000/api/_openapi
+- Public site: http://localhost:3010
+- Admin panel: http://localhost:3010/admin
+- API OpenAPI: http://localhost:3010/api/_openapi
 
 ## Available Scripts
 

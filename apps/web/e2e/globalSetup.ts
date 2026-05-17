@@ -13,7 +13,7 @@ async function globalSetup() {
 
   // Test that the app is reachable
   try {
-    await page.goto("http://localhost:3000", { waitUntil: "networkidle" });
+    await page.goto("http://localhost:3010", { waitUntil: "networkidle" });
     console.log("✓ Application is ready for testing");
   } catch (error) {
     console.error("✗ Application failed to load:", error);

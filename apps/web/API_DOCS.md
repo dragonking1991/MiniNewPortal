@@ -3,7 +3,7 @@
 ## Base URL
 
 ```
-http://localhost:3000/api
+http://localhost:3010/api
 ```
 
 All endpoints return JSON responses. Authentication uses httpOnly cookies with JWT tokens.
@@ -14,7 +14,7 @@ All endpoints return JSON responses. Authentication uses httpOnly cookies with J
 
 **Request:**
 ```bash
-curl -X POST http://localhost:3000/api/auth/login \
+curl -X POST http://localhost:3010/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "username": "admin",
@@ -39,7 +39,7 @@ curl -X POST http://localhost:3000/api/auth/login \
 
 **Request:**
 ```bash
-curl http://localhost:3000/api/auth/me \
+curl http://localhost:3010/api/auth/me \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -58,7 +58,7 @@ curl http://localhost:3000/api/auth/me \
 
 **Request:**
 ```bash
-curl -X POST http://localhost:3000/api/auth/logout \
+curl -X POST http://localhost:3010/api/auth/logout \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -78,7 +78,7 @@ curl -X POST http://localhost:3000/api/auth/logout \
 
 **Request:**
 ```bash
-curl http://localhost:3000/api/categories
+curl http://localhost:3010/api/categories
 ```
 
 **Response:** `200 OK`
@@ -107,7 +107,7 @@ curl http://localhost:3000/api/categories
 
 **Request:**
 ```bash
-curl 'http://localhost:3000/api/news?page=1&limit=20&categoryId=1&categorySlug=technology'
+curl 'http://localhost:3010/api/news?page=1&limit=20&categoryId=1&categorySlug=technology'
 ```
 
 **Query Parameters:**
@@ -146,7 +146,7 @@ curl 'http://localhost:3000/api/news?page=1&limit=20&categoryId=1&categorySlug=t
 
 **Request:**
 ```bash
-curl http://localhost:3000/api/news/breaking-new-ai-model-released
+curl http://localhost:3010/api/news/breaking-new-ai-model-released
 ```
 
 **Response:** `200 OK`
@@ -181,7 +181,7 @@ curl http://localhost:3000/api/news/breaking-new-ai-model-released
 
 **Request:**
 ```bash
-curl http://localhost:3000/api/news/most-viewed-today
+curl http://localhost:3010/api/news/most-viewed-today
 ```
 
 **Response:** `200 OK`
@@ -214,7 +214,7 @@ All admin endpoints require authentication (JWT in httpOnly cookie).
 
 **Request:**
 ```bash
-curl 'http://localhost:3000/api/admin/categories?page=1&limit=20' \
+curl 'http://localhost:3010/api/admin/categories?page=1&limit=20' \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -227,7 +227,7 @@ curl 'http://localhost:3000/api/admin/categories?page=1&limit=20' \
 
 **Request:**
 ```bash
-curl -X POST http://localhost:3000/api/admin/categories \
+curl -X POST http://localhost:3010/api/admin/categories \
   -H "Content-Type: application/json" \
   -b "mnp_token=your-jwt-token" \
   -d '{
@@ -257,7 +257,7 @@ curl -X POST http://localhost:3000/api/admin/categories \
 
 **Request:**
 ```bash
-curl http://localhost:3000/api/admin/categories/1 \
+curl http://localhost:3010/api/admin/categories/1 \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -267,7 +267,7 @@ curl http://localhost:3000/api/admin/categories/1 \
 
 **Request:**
 ```bash
-curl -X PUT http://localhost:3000/api/admin/categories/1 \
+curl -X PUT http://localhost:3010/api/admin/categories/1 \
   -H "Content-Type: application/json" \
   -b "mnp_token=your-jwt-token" \
   -d '{
@@ -288,7 +288,7 @@ curl -X PUT http://localhost:3000/api/admin/categories/1 \
 
 **Request:**
 ```bash
-curl -X DELETE http://localhost:3000/api/admin/categories/1 \
+curl -X DELETE http://localhost:3010/api/admin/categories/1 \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -308,7 +308,7 @@ curl -X DELETE http://localhost:3000/api/admin/categories/1 \
 
 **Request:**
 ```bash
-curl 'http://localhost:3000/api/admin/news?page=1&limit=20&categoryId=1&status=DRAFT' \
+curl 'http://localhost:3010/api/admin/news?page=1&limit=20&categoryId=1&status=DRAFT' \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -324,7 +324,7 @@ curl 'http://localhost:3000/api/admin/news?page=1&limit=20&categoryId=1&status=D
 
 **Request:**
 ```bash
-curl -X POST http://localhost:3000/api/admin/news \
+curl -X POST http://localhost:3010/api/admin/news \
   -H "Content-Type: application/json" \
   -b "mnp_token=your-jwt-token" \
   -d '{
@@ -351,7 +351,7 @@ curl -X POST http://localhost:3000/api/admin/news \
 
 **Request:**
 ```bash
-curl http://localhost:3000/api/admin/news/1 \
+curl http://localhost:3010/api/admin/news/1 \
   -b "mnp_token=your-jwt-token"
 ```
 
@@ -361,7 +361,7 @@ curl http://localhost:3000/api/admin/news/1 \
 
 **Request:**
 ```bash
-curl -X PUT http://localhost:3000/api/admin/news/1 \
+curl -X PUT http://localhost:3010/api/admin/news/1 \
   -H "Content-Type: application/json" \
   -b "mnp_token=your-jwt-token" \
   -d '{
@@ -382,7 +382,7 @@ curl -X PUT http://localhost:3000/api/admin/news/1 \
 
 **Request:**
 ```bash
-curl -X DELETE http://localhost:3000/api/admin/news/1 \
+curl -X DELETE http://localhost:3010/api/admin/news/1 \
   -b "mnp_token=your-jwt-token"
 ```
 

@@ -23,5 +23,8 @@ export default defineNuxtConfig({
     tsConfig: {
       extends: "../../../tsconfig.base.json"
     }
+  },
+  devServer: {
+    port: 3010
   }
 });
