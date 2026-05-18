@@ -1,10 +1,6 @@
 <template>
-  <div>
-    <AppHeader />
-    <main class="max-w-4xl mx-auto px-4 py-8">
-      <NewsDetail :article="article" />
-    </main>
-    <AppFooter />
+  <div class="mx-auto w-full max-w-4xl">
+    <NewsDetail :article="article" />
   </div>
 </template>
 

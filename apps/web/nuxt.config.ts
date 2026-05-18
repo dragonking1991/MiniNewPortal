@@ -10,9 +10,10 @@ export default defineNuxtConfig({
     "/admin/**": { ssr: false }
   },
   runtimeConfig: {
-    jwtSecret: process.env.JWT_SECRET ?? "",
-    adminUsername: process.env.ADMIN_USERNAME ?? "",
-    adminPassword: process.env.ADMIN_PASSWORD ?? "",
+    // Dev fallbacks prevent accidental empty credentials when .env loading differs by cwd.
+    jwtSecret: process.env.JWT_SECRET || "dev-secret-key-32-characters-minimum-required",
+    adminUsername: process.env.ADMIN_USERNAME || "admin",
+    adminPassword: process.env.ADMIN_PASSWORD || "admin123",
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api"
     }

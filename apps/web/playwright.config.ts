@@ -14,12 +14,12 @@ export default defineConfig({
 
   projects: [
     {
-      name: "chromium",
+      name: "desktop-chromium",
       use: { ...devices["Desktop Chromium"] }
     },
     {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] }
+      name: "mobile-chromium",
+      use: { ...devices["iPhone 13"] }
     }
   ],
 
@@ -29,5 +29,5 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI
   },
 
-  globalSetup: require.resolve("./globalSetup.ts")
+  globalSetup: "./e2e/globalSetup.ts"
 });

@@ -1,18 +1,11 @@
 <template>
   <div class="min-h-screen bg-slate-50 text-slate-900">
-    <header class="border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <NuxtLink to="/" class="text-lg font-semibold tracking-tight">
-          Mini News Portal
-        </NuxtLink>
-        <nav class="text-sm text-slate-600">
-          Public Site
-        </nav>
-      </div>
-    </header>
+    <AppHeader />
 
-    <main class="mx-auto max-w-6xl px-4 py-10">
+    <main class="mx-auto w-full max-w-7xl px-4 py-6 sm:py-8 lg:px-6 lg:py-10">
       <slot />
     </main>
+
+    <AppFooter />
   </div>
 </template>

@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <AppHeader />
-    <main class="max-w-7xl mx-auto px-4 py-8">
-      <MostViewedToday :news="mostViewed ?? []" />
-      <section>
-        <h2 class="text-3xl font-bold mb-6">Latest News</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <CategorySection v-for="cat in categories ?? []" :key="cat.id" :category="cat" :news="categoriesNews[cat.id] ?? []" />
-        </div>
-      </section>
-    </main>
-    <AppFooter />
+  <div class="space-y-8 sm:space-y-10">
+    <MostViewedToday :news="mostViewed ?? []" />
+    <section class="space-y-6">
+      <h1 class="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Latest News</h1>
+      <div class="space-y-8 sm:space-y-10">
+        <CategorySection v-for="cat in categories ?? []" :key="cat.id" :category="cat" :news="categoriesNews[cat.id] ?? []" />
+      </div>
+    </section>
   </div>
 </template>
 

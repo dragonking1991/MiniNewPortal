@@ -1,22 +1,22 @@
 <template>
   <div>
-    <div class="mb-4 flex gap-2">
-      <button @click="showForm = !showForm" class="bg-blue-600 text-white rounded px-4 py-2">
+    <div class="mb-4 flex flex-wrap gap-2">
+      <button @click="showForm = !showForm" class="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
         {{ showForm ? "Cancel" : "Add Category" }}
       </button>
     </div>
-    <form v-if="showForm" @submit.prevent="save" class="bg-white rounded-lg shadow-md p-6 mb-6">
-      <input v-model="form.name" type="text" placeholder="Category Name" class="w-full border rounded px-3 py-2 mb-2" required />
-      <input v-model="form.slug" type="text" placeholder="Category Slug" class="w-full border rounded px-3 py-2 mb-2" required />
-      <button type="submit" class="bg-green-600 text-white rounded px-4 py-2">Save</button>
+    <form v-if="showForm" @submit.prevent="save" class="mb-6 space-y-2 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+      <input v-model="form.name" type="text" placeholder="Category Name" class="w-full rounded border border-slate-300 px-3 py-2 text-sm" required />
+      <input v-model="form.slug" type="text" placeholder="Category Slug" class="w-full rounded border border-slate-300 px-3 py-2 text-sm" required />
+      <button type="submit" class="rounded bg-green-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-green-700">Save</button>
     </form>
-    <div class="space-y-2">
-      <div v-for="cat in categories ?? []" :key="cat.id" class="bg-white rounded-lg shadow-md p-4 flex justify-between items-center">
+    <div class="space-y-3">
+      <div v-for="cat in categories" :key="cat.id" class="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 class="font-bold">{{ cat.name }} ({{ (cat as any).newsCount ?? 0 }} news)</h3>
-          <p class="text-gray-600 text-sm">{{ cat.slug }}</p>
+          <h3 class="font-semibold text-slate-900">{{ cat.name }} ({{ getNewsCount(cat) }} news)</h3>
+          <p class="text-sm text-slate-600">{{ cat.slug }}</p>
         </div>
-        <button @click="deleteCategory(cat.id)" class="bg-red-600 text-white rounded px-3 py-1">Delete</button>
+        <button @click="deleteCategory(cat.id)" class="self-start rounded bg-red-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-red-700 sm:self-auto">Delete</button>
       </div>
     </div>
   </div>
@@ -25,11 +25,20 @@
 <script setup lang="ts">
 import type { Category } from "@mnp/shared";
 
-definePageMeta({ middleware: "admin-auth" });
+interface CategoryListResponse {
+  items: Category[];
+  page: number;
+  limit: number;
+  total: number;
+  hasMore: boolean;
+}
+
+definePageMeta({ middleware: "admin-auth", layout: "admin" });
 
 const showForm = ref(false);
 const form = ref({ name: "", slug: "" });
-const { data: categories, refresh } = await useFetch<Category[]>("/api/admin/categories");
+const { data: categoryData, refresh } = await useFetch<CategoryListResponse>("/api/admin/categories");
+const categories = computed(() => categoryData.value?.items ?? []);
 
 async function save() {
   await $fetch("/api/admin/categories", {
@@ -46,5 +55,9 @@ async function deleteCategory(id: number) {
     await $fetch(`/api/admin/categories/${id}`, { method: "DELETE" });
     refresh();
   }
+}
+
+function getNewsCount(category: Category) {
+  return ((category as Category & { newsCount?: number }).newsCount ?? 0);
 }
 </script>

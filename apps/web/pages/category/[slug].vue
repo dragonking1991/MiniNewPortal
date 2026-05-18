@@ -1,16 +1,14 @@
 <template>
   <div>
-    <AppHeader />
-    <main class="max-w-7xl mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold mb-6">{{ slug }}</h1>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <NewsCard v-for="item in news" :key="item.id" :news="item" />
-      </div>
-      <div v-if="hasMore" ref="observerTarget" class="py-8 text-center">
-        <p v-if="isLoading" class="text-gray-600">Loading more...</p>
-      </div>
-    </main>
-    <AppFooter />
+    <h1 class="mb-6 text-2xl font-semibold capitalize tracking-tight text-slate-900 sm:text-3xl">{{ slug }}</h1>
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <NewsCard v-for="item in news" :key="item.id" :news="item" />
+    </div>
+    <div v-if="hasMore" ref="observerTarget" class="py-8 text-center">
+      <p v-if="isLoading" class="text-sm text-slate-600">Loading more...</p>
+      <p v-else class="text-sm text-slate-500">Scroll for more</p>
+    </div>
+    <p v-else class="py-8 text-center text-sm text-slate-500">End of list</p>
   </div>
 </template>
 

@@ -1,9 +1,9 @@
 <template>
-  <article v-if="article" class="bg-white rounded-lg shadow-md p-6">
-    <img v-if="article.imageUrl" :src="article.imageUrl" :alt="article.title" class="w-full h-80 object-cover rounded mb-4" />
-    <h1 class="text-4xl font-bold mb-2">{{ article.title }}</h1>
-    <p class="text-gray-600 mb-4">{{ article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Draft' }} • {{ article.viewCount }} views</p>
-    <div class="prose max-w-none mb-6">{{ article.content }}</div>
+  <article v-if="article" class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 lg:p-8">
+    <img v-if="article.imageUrl" :src="article.imageUrl" :alt="article.title" class="mb-5 h-56 w-full rounded-xl object-cover sm:h-72 lg:h-80" />
+    <h1 class="mb-2 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl lg:text-4xl">{{ article.title }}</h1>
+    <p class="mb-5 text-sm text-slate-600">{{ article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Draft' }} • {{ article.viewCount }} views</p>
+    <div class="prose max-w-none text-slate-800 mb-6">{{ article.content }}</div>
     <NewerOlderNav :newer-slug="article.newerSlug" :older-slug="article.olderSlug" />
   </article>
 </template>
