@@ -24,6 +24,16 @@ export const categoryWithNewsCountSchema = categorySchema.extend({
 // ==================== NEWS ====================
 export const newsStatusSchema = z.enum(["DRAFT", "PUBLISHED"]);
 
+const nullablePublishedAtSchema = z.preprocess(
+  (value) => {
+    if (value === "") {
+      return null;
+    }
+    return value;
+  },
+  z.coerce.date().nullable()
+);
+
 export const newsCreateSchema = z.object({
   title: z.string().min(1, "Title is required").max(200, "Title must be 200 characters or less"),
   slug: z.string().min(1, "Slug is required").max(220, "Slug must be 220 characters or less"),
@@ -31,7 +41,7 @@ export const newsCreateSchema = z.object({
   content: z.string().min(1, "Content is required"),
   imageUrl: z.string().url("Image URL must be valid").max(500).nullable().optional(),
   status: newsStatusSchema,
-  publishedAt: z.date().nullable().optional(),
+  publishedAt: nullablePublishedAtSchema.optional(),
   categoryId: z.number().int().positive("Category ID must be a positive number")
 });
 
@@ -42,7 +52,7 @@ export const newsUpdateSchema = z.object({
   content: z.string().min(1).optional(),
   imageUrl: z.string().url().max(500).nullable().optional(),
   status: newsStatusSchema.optional(),
-  publishedAt: z.date().nullable().optional(),
+  publishedAt: nullablePublishedAtSchema.optional(),
   categoryId: z.number().int().positive().optional()
 });
 

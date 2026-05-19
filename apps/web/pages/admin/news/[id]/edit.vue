@@ -69,8 +69,9 @@ async function save() {
     method: "PUT",
     body: {
       ...form.value,
+      imageUrl: form.value.imageUrl.trim() ? form.value.imageUrl.trim() : null,
       categoryId: Number(form.value.categoryId),
-      publishedAt: form.value.publishedAt ? new Date(form.value.publishedAt) : null
+      publishedAt: form.value.publishedAt || null
     }
   });
   router.push("/admin/news");
