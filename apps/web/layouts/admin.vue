@@ -1,11 +1,11 @@
 <template>
   <div class="min-h-screen bg-slate-100 text-slate-900">
     <header class="sticky top-0 z-40 border-b border-slate-200 bg-white lg:hidden">
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
+      <div class="mx-auto flex items-center justify-between p-5">
         <NuxtLink to="/admin" class="text-base font-semibold tracking-tight text-slate-900">Admin Panel</NuxtLink>
         <button
           type="button"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-300 text-slate-700 transition hover:bg-slate-100"
+          class="inline-flex p-3 items-center justify-center rounded-lg border border-slate-300 text-slate-700 transition hover:bg-slate-100"
           aria-label="Toggle admin navigation"
           :aria-expanded="isNavOpen"
           @click="isNavOpen = !isNavOpen"

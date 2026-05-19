@@ -17,7 +17,17 @@ export async function validate(
   params?: unknown;
 }> {
   const result: { body?: unknown; query?: unknown; params?: unknown } = {};
-  const errors: Record<string, Record<string, string[]>> = {};
+  const details: Array<{ field: string; message: string }> = [];
+
+  function collectIssues(source: "body" | "query" | "params", err: z.ZodError) {
+    for (const issue of err.issues) {
+      const path = issue.path.length ? issue.path.join(".") : "_root";
+      details.push({
+        field: `${source}.${path}`,
+        message: issue.message
+      });
+    }
+  }
 
   if (schemas.body) {
     try {
@@ -25,7 +35,7 @@ export async function validate(
       result.body = schemas.body.parse(body);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        errors.body = err.flatten().fieldErrors as Record<string, string[]>;
+        collectIssues("body", err);
       }
     }
   }
@@ -36,7 +46,7 @@ export async function validate(
       result.query = schemas.query.parse(query);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        errors.query = err.flatten().fieldErrors as Record<string, string[]>;
+        collectIssues("query", err);
       }
     }
   }
@@ -47,13 +57,13 @@ export async function validate(
       result.params = schemas.params.parse(params);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        errors.params = err.flatten().fieldErrors as Record<string, string[]>;
+        collectIssues("params", err);
       }
     }
   }
 
-  if (Object.keys(errors).length > 0) {
-    throw new ValidationError("Validation failed", errors);
+  if (details.length > 0) {
+    throw new ValidationError("Validation failed", details);
   }
 
   return result;

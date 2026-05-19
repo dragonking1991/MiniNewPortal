@@ -26,7 +26,12 @@ async function seed() {
   const existingCategories = await db.select().from(categories);
 
   if (existingCategories.length === 0) {
-    await db.insert(categories).values(categorySeeds.map((item) => ({ ...item })));
+    const now = new Date();
+    await db.insert(categories).values(categorySeeds.map((item) => ({
+      ...item,
+      createdAt: now,
+      updatedAt: now
+    })));
   }
 
   const allCategories: Array<typeof categories.$inferSelect> = await db
@@ -58,7 +63,9 @@ async function seed() {
         status: "PUBLISHED",
         publishedAt: hoursAgo(sequence),
         viewCount: 40 + sequence,
-        categoryId
+        categoryId,
+        createdAt: new Date(),
+        updatedAt: new Date()
       });
     }
 
@@ -73,7 +80,9 @@ async function seed() {
         status: "DRAFT",
         publishedAt: null,
         viewCount: 0,
-        categoryId
+        categoryId,
+        createdAt: new Date(),
+        updatedAt: new Date()
       });
     }
   }

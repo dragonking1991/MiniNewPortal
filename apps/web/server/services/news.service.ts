@@ -4,7 +4,53 @@ import { news } from "../db/schema";
 import { newsRepo, type NewsListFilters, type NewsCreateInput, type NewsUpdateInput } from "../repositories/news.repo";
 import { viewRepo } from "../repositories/view.repo";
 import { categoryService } from "./category.service";
-import { NotFoundError, ConflictError, ValidationError } from "./errors";
+import { NotFoundError, ConflictError, ValidationError, CategoryNotFoundError } from "./errors";
+
+function hasOwn(obj: object, key: string) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+function validateRequiredNewsInput(input: Record<string, unknown>, mode: "create" | "update") {
+  const requiredFields = ["title", "slug", "summary", "content", "status", "categoryId"] as const;
+  const details: Array<{ field: string; message: string }> = [];
+
+  for (const field of requiredFields) {
+    if (mode === "update" && !hasOwn(input, field)) {
+      continue;
+    }
+
+    const value = input[field];
+    if (value === null || value === undefined) {
+      details.push({ field, message: `${field} is required` });
+      continue;
+    }
+
+    if (typeof value === "string" && value.trim().length === 0) {
+      details.push({ field, message: `${field} is required` });
+    }
+  }
+
+  if (details.length > 0) {
+    throw new ValidationError("Validation failed", details);
+  }
+}
+
+async function assertCategoryExists(categoryId: unknown) {
+  if (typeof categoryId !== "number" || !Number.isInteger(categoryId) || categoryId <= 0) {
+    throw new ValidationError("Validation failed", [
+      { field: "categoryId", message: "categoryId must be a positive integer" }
+    ]);
+  }
+
+  try {
+    await categoryService.getById(categoryId);
+  } catch (error) {
+    if (error instanceof NotFoundError) {
+      throw new CategoryNotFoundError(categoryId);
+    }
+    throw error;
+  }
+}
 
 export const newsService = {
   async listPublished(filters: { page: number; limit: number; categoryId?: number; categorySlug?: string }) {
@@ -62,8 +108,8 @@ export const newsService = {
   },
 
   async create(input: NewsCreateInput) {
-    // Validate category exists
-    await categoryService.getById(input.categoryId);
+    validateRequiredNewsInput(input as unknown as Record<string, unknown>, "create");
+    await assertCategoryExists(input.categoryId);
 
     // Check slug uniqueness
     const existing = await newsRepo.findBySlug(input.slug);
@@ -80,14 +126,16 @@ export const newsService = {
   },
 
   async update(id: number, input: NewsUpdateInput) {
+    validateRequiredNewsInput(input as unknown as Record<string, unknown>, "update");
+
     const article = await newsRepo.findById(id);
     if (!article) {
       throw new NotFoundError("Article", String(id));
     }
 
     // If category is being changed, validate it exists
-    if (input.categoryId && input.categoryId !== article.categoryId) {
-      await categoryService.getById(input.categoryId);
+    if (hasOwn(input as object, "categoryId") && input.categoryId !== article.categoryId) {
+      await assertCategoryExists(input.categoryId);
     }
 
     // If slug is being changed, check uniqueness

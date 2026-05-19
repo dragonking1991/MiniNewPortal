@@ -13,8 +13,18 @@
 <script setup lang="ts">
 import type { Category, News } from "@mnp/shared";
 
+type MostViewedItem = {
+  newsId: number;
+  slug: string;
+  title: string;
+  summary: string;
+  imageUrl: string | null;
+  viewCount: number;
+  publishedAt: string | Date | null;
+};
+
 const { data: categories } = await useFetch<Category[]>("/api/categories");
-const { data: mostViewed } = await useFetch<News[]>("/api/news/most-viewed-today");
+const { data: mostViewed } = await useFetch<MostViewedItem[]>("/api/news/most-viewed-today");
 
 const categoriesNews = ref<Record<number, News[]>>({});
 

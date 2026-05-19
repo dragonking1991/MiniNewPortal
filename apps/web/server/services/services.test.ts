@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { newsService } from "./news.service";
 import { categoryService } from "./category.service";
 import { createAuthService } from "./auth.service";
-import { ConflictError, NotFoundError, ValidationError, CategoryHasNewsError } from "./errors";
+import { ConflictError, NotFoundError, ValidationError, CategoryHasNewsError, CategoryNotFoundError } from "./errors";
 
 // Mock repositories with proper typing
 vi.mock("../repositories/news.repo", () => ({
@@ -50,6 +50,10 @@ vi.mock("../db/client", () => ({
 }));
 
 describe("Services", () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   describe("CategoryService", () => {
     it("should throw NotFoundError when category not found by id", async () => {
       const { categoryRepo } = await import("../repositories/category.repo");
@@ -77,6 +81,12 @@ describe("Services", () => {
       vi.mocked(categoryRepo.findBySlug).mockResolvedValueOnce(mockCategory);
 
       await expect(categoryService.create({ name: "New", slug: "existing" })).rejects.toThrow(ConflictError);
+    });
+
+    it("should throw ValidationError when creating category with empty name", async () => {
+      await expect(
+        categoryService.create({ name: "", slug: "valid-slug" } as any)
+      ).rejects.toThrow(ValidationError);
     });
   });
 
@@ -153,6 +163,38 @@ describe("Services", () => {
           categoryId: 1
         })
       ).rejects.toThrow(ConflictError);
+    });
+
+    it("should throw ValidationError when required fields are null on create", async () => {
+      await expect(
+        newsService.create({
+          title: "",
+          slug: "",
+          summary: "",
+          content: "",
+          status: "DRAFT",
+          categoryId: null as unknown as number
+        } as any)
+      ).rejects.toThrow(ValidationError);
+    });
+
+    it("should throw CategoryNotFoundError when category does not exist", async () => {
+      const { categoryRepo } = await import("../repositories/category.repo");
+      const { newsRepo: newsRepoMock } = await import("../repositories/news.repo");
+
+      vi.mocked(categoryRepo.findById).mockResolvedValueOnce(null as any);
+      vi.mocked(newsRepoMock.findBySlug).mockResolvedValueOnce(null as any);
+
+      await expect(
+        newsService.create({
+          title: "New",
+          slug: "new-item",
+          summary: "summary",
+          content: "content",
+          status: "DRAFT",
+          categoryId: 999
+        })
+      ).rejects.toThrow(CategoryNotFoundError);
     });
 
     it("should return article with incremented view count and sibling slugs", async () => {

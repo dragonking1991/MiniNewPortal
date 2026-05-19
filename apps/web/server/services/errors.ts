@@ -42,6 +42,15 @@ export class CategoryHasNewsError extends AppError {
   }
 }
 
+export class CategoryNotFoundError extends AppError {
+  constructor(categoryId: number) {
+    super("CATEGORY_NOT_FOUND", `Category not found: ${categoryId}`, 400, [
+      { field: "categoryId", message: "Category does not exist" }
+    ]);
+    this.name = "CategoryNotFoundError";
+  }
+}
+
 export class AuthenticationError extends AppError {
   constructor(message = "Invalid credentials") {
     super("AUTHENTICATION_ERROR", message, 401);
